@@ -1,0 +1,37 @@
+<div th:fragment="content">
+    <div class="container mt-3">
+        <h4 th:text="${product.id == null ? '➕ Thêm Sản phẩm sử dụng' : '✏️ Cập nhật Sản phẩm sử dụng'}"></h4>
+
+        <!-- ✅ ĐÃ SỬA LẠI CÚ PHÁP TH:ACTION -->
+        <form th:action="${product.id == null} ? @{/productusage/save} : @{'/productusage/update/' + product.id}" method="post">
+            <div class="mb-3">
+                <label>Tên sản phẩm</label>
+                <input class="form-control" name="productName" th:value="${product.productName}" required />
+            </div>
+
+            <div class="mb-3">
+                <label>Số lượng</label>
+                <input type="number" class="form-control" name="quantityUsed" th:value="${product.quantityUsed}" required />
+            </div>
+
+            <div class="mb-3">
+                <label>Đơn vị</label>
+                <input class="form-control" name="unit" th:value="${product.unit}" required />
+            </div>
+
+            <div class="mb-3">
+                <label>Booking sử dụng</label>
+                <select name="bookingId" class="form-select" required>
+                    <option th:each="b : ${bookings}"
+                            th:value="${b.id}"
+                            th:text="${b.customer.name + ' - ' + b.service.name}"
+                            th:selected="${product.bookingId == b.id}">
+                    </option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">💾 Lưu</button>
+            <a th:href="@{/productusage/list}" class="btn btn-secondary">⬅ Quay lại</a>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,44 @@
+<div th:fragment="content">
+    <div class="container mt-3">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4>📅 Danh sách Đặt lịch</h4>
+            <a th:href="@{/booking/new}" class="btn btn-success">+ Thêm mới</a>
+        </div>
+
+        <form method="get" th:action="@{/booking/list}" class="d-flex mb-3">
+            <input name="keyword" th:value="${keyword}" class="form-control me-2" placeholder="Tìm khách hàng..."/>
+            <button class="btn btn-primary">Tìm kiếm</button>
+        </form>
+
+        <table class="table table-bordered table-hover align-middle">
+            <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Khách hàng</th>
+                <th>Nhân viên</th>
+                <th>Dịch vụ</th>
+                <th>Thời gian</th>
+                <th>Trạng thái</th>
+                <th>Thao tác</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="b : ${bookings}">
+                <td th:text="${b.id}"></td>
+                <td th:text="${b.customerName}"></td>
+                <td th:text="${b.employeeName}"></td>
+                <td th:text="${b.serviceName}"></td>
+                <td th:text="${#temporals.format(b.bookingTime, 'dd/MM/yyyy HH:mm')}"></td>
+                <td>
+                    <span th:text="${b.status}" th:classappend="${b.status == 'Hoàn thành'} ? 'badge bg-success' : (b.status == 'Đang chờ' ? 'badge bg-warning' : 'badge bg-secondary')"></span>
+                </td>
+                <td>
+                    <a th:href="@{'/booking/detail/' + ${b.id}}" class="btn btn-info btn-sm">Xem</a>
+                    <a th:href="@{'/booking/edit/' + ${b.id}}" class="btn btn-warning btn-sm">Sửa</a>
+                    <a th:href="@{'/booking/delete/' + ${b.id}}" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc muốn xóa?')">Xóa</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

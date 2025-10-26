@@ -1,0 +1,14 @@
+<div th:fragment="content">
+    <div class="container mt-3">
+        <h4>💳 Chi tiết Thanh toán</h4>
+        <table class="table table-striped w-75">
+            <tr><th>ID</th><td th:text="${payment.id}"></td></tr>
+            <tr><th>Khách hàng</th><td th:text="${payment.customerName}"></td></tr>
+            <tr><th>Dịch vụ</th><td th:text="${payment.serviceName}"></td></tr>
+            <tr><th>Số tiền</th><td th:text="${#numbers.formatDecimal(payment.amount, 0, 'POINT', 0, 'COMMA')} + ' ₫'"></td></tr>
+            <tr><th>Ngày thanh toán</th><td th:text="${#temporals.format(payment.paymentDate, 'dd/MM/yyyy HH:mm')}"></td></tr>
+            <tr><th>Phương thức</th><td th:text="${payment.paymentMethod}"></td></tr>
+        </table>
+        <a th:href="@{/payment/list}" class="btn btn-secondary">⬅ Quay lại</a>
+    </div>
+</div>

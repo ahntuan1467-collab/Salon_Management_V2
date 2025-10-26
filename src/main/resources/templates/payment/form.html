@@ -1,0 +1,38 @@
+<div th:fragment="content">
+    <div class="container mt-3">
+        <h4 th:text="${payment.id == null ? '➕ Thêm thanh toán' : '✏️ Cập nhật thanh toán'}"></h4>
+
+        <!-- ✅ Cú pháp th:action đúng -->
+        <form th:action="${payment.id == null} ? @{/payment/save} : @{'/payment/update/' + payment.id}" method="post">
+
+            <div class="mb-3">
+                <label>Chọn Booking</label>
+                <select name="bookingId" class="form-select" required>
+                    <option th:each="b : ${bookings}"
+                            th:value="${b.id}"
+                            th:text="${b.customer.name + ' - ' + b.service.name}"
+                            th:selected="${payment.bookingId == b.id}">
+                    </option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label>Số tiền (VNĐ)</label>
+                <input type="number" class="form-control" name="amount"
+                       th:value="${payment.amount}" required/>
+            </div>
+
+            <div class="mb-3">
+                <label>Phương thức thanh toán</label>
+                <select class="form-select" name="paymentMethod">
+                    <option th:selected="${payment.paymentMethod == 'Tiền mặt'}">Tiền mặt</option>
+                    <option th:selected="${payment.paymentMethod == 'Thẻ'}">Thẻ</option>
+                    <option th:selected="${payment.paymentMethod == 'Chuyển khoản'}">Chuyển khoản</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">💾 Lưu</button>
+            <a th:href="@{/payment/list}" class="btn btn-secondary">⬅ Quay lại</a>
+        </form>
+    </div>
+</div>

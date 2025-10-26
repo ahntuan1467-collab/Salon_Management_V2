@@ -1,0 +1,14 @@
+<div th:fragment="content">
+    <div class="container mt-3">
+        <h4>📋 Chi tiết Sản phẩm sử dụng</h4>
+        <table class="table table-striped w-75">
+            <tr><th>ID</th><td th:text="${product.id}"></td></tr>
+            <tr><th>Tên sản phẩm</th><td th:text="${product.productName}"></td></tr>
+            <tr><th>Số lượng</th><td th:text="${product.quantityUsed}"></td></tr>
+            <tr><th>Đơn vị</th><td th:text="${product.unit}"></td></tr>
+            <tr><th>Ngày sử dụng</th><td th:text="${#temporals.format(product.usageDate, 'dd/MM/yyyy HH:mm')}"></td></tr>
+            <tr><th>Khách hàng</th><td th:text="${product.customerName}"></td></tr>
+        </table>
+        <a th:href="@{/productusage/list}" class="btn btn-secondary">⬅ Quay lại</a>
+    </div>
+</div>

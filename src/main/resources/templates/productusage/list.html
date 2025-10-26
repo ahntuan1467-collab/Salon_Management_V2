@@ -1,0 +1,42 @@
+<div th:fragment="content">
+    <div class="container mt-3">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4>🧴 Danh sách Sản phẩm sử dụng</h4>
+            <a th:href="@{/productusage/new}" class="btn btn-success">+ Thêm mới</a>
+        </div>
+
+        <form method="get" th:action="@{/productusage/list}" class="d-flex mb-3">
+            <input name="keyword" th:value="${keyword}" class="form-control me-2" placeholder="Tìm theo tên sản phẩm..."/>
+            <button class="btn btn-primary">Tìm kiếm</button>
+        </form>
+
+        <table class="table table-bordered table-hover align-middle">
+            <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Tên sản phẩm</th>
+                <th>Số lượng</th>
+                <th>Đơn vị</th>
+                <th>Ngày sử dụng</th>
+                <th>Khách hàng</th>
+                <th>Thao tác</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="p : ${products}">
+                <td th:text="${p.id}"></td>
+                <td th:text="${p.productName}"></td>
+                <td th:text="${p.quantityUsed}"></td>
+                <td th:text="${p.unit}"></td>
+                <td th:text="${#temporals.format(p.usageDate, 'dd/MM/yyyy HH:mm')}"></td>
+                <td th:text="${p.customerName}"></td>
+                <td>
+                    <a th:href="@{'/productusage/detail/' + ${p.id}}" class="btn btn-info btn-sm">Xem</a>
+                    <a th:href="@{'/productusage/edit/' + ${p.id}}" class="btn btn-warning btn-sm">Sửa</a>
+                    <a th:href="@{'/productusage/delete/' + ${p.id}}" class="btn btn-danger btn-sm" onclick="return confirm('Xóa sản phẩm này?')">Xóa</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

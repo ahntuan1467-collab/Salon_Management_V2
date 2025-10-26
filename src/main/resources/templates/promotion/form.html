@@ -1,0 +1,52 @@
+<div th:fragment="content">
+    <div class="container mt-3">
+        <h4 th:text="${promotion.id == null ? '➕ Thêm Khuyến mãi' : '✏️ Cập nhật Khuyến mãi'}"></h4>
+
+        <!-- ✅ Đã sửa cú pháp th:action -->
+        <form th:action="${promotion.id == null} ? @{/promotion/save} : @{'/promotion/update/' + promotion.id}" method="post">
+            <div class="mb-3">
+                <label>Mã Khuyến mãi</label>
+                <input class="form-control" name="code" th:value="${promotion.code}" required />
+            </div>
+
+            <div class="mb-3">
+                <label>Tên chương trình</label>
+                <input class="form-control" name="name" th:value="${promotion.name}" required />
+            </div>
+
+            <div class="mb-3">
+                <label>Giảm giá (%)</label>
+                <input type="number" class="form-control" name="discount" th:value="${promotion.discount}" required />
+            </div>
+
+            <div class="mb-3">
+                <label>Ngày bắt đầu</label>
+                <input type="date" class="form-control" name="startDate"
+                       th:value="${promotion.startDate != null ? #dates.format(promotion.startDate, 'yyyy-MM-dd') : ''}" required />
+            </div>
+
+            <div class="mb-3">
+                <label>Ngày kết thúc</label>
+                <input type="date" class="form-control" name="endDate"
+                       th:value="${promotion.endDate != null ? #dates.format(promotion.endDate, 'yyyy-MM-dd') : ''}" required />
+            </div>
+
+            <div class="mb-3">
+                <label>Mô tả</label>
+                <textarea class="form-control" name="description" rows="3"
+                          th:text="${promotion.description}"></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label>Trạng thái</label>
+                <select class="form-select" name="status">
+                    <option th:selected="${promotion.status == 'Hoạt động'}">Hoạt động</option>
+                    <option th:selected="${promotion.status == 'Hết hạn'}">Hết hạn</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">💾 Lưu</button>
+            <a th:href="@{/promotion/list}" class="btn btn-secondary">⬅ Quay lại</a>
+        </form>
+    </div>
+</div>

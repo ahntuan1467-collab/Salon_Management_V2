@@ -1,0 +1,14 @@
+<div th:fragment="content">
+    <div class="container mt-3">
+        <h4>👤 Chi tiết khách hàng</h4>
+        <table class="table table-striped w-75">
+            <tr><th>ID</th><td th:text="${customer.id}"></td></tr>
+            <tr><th>Tên</th><td th:text="${customer.name}"></td></tr>
+            <tr><th>Điện thoại</th><td th:text="${customer.phone}"></td></tr>
+            <tr><th>Email</th><td th:text="${customer.email}"></td></tr>
+            <tr><th>Địa chỉ</th><td th:text="${customer.address}"></td></tr>
+            <tr><th>Loại thành viên</th><td th:text="${customer.memberType}"></td></tr>
+        </table>
+        <a th:href="@{/customer/list}" class="btn btn-secondary">⬅ Quay lại</a>
+    </div>
+</div>

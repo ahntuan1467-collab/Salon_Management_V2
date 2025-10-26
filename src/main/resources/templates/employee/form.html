@@ -1,0 +1,54 @@
+<div th:fragment="content">
+    <div class="container mt-3">
+        <h4 th:text="${employee.id == null ? '➕ Thêm nhân viên' : '✏️ Cập nhật nhân viên'}"></h4>
+
+        <!-- ✅ Sửa dòng này -->
+        <form th:action="${employee.id == null} ? @{/employee/save} : @{'/employee/update/' + employee.id}" method="post">
+
+            <div class="mb-3">
+                <label>Tên nhân viên</label>
+                <input class="form-control" name="name" th:value="${employee.name}" required/>
+            </div>
+
+            <div class="mb-3">
+                <label>Số điện thoại</label>
+                <input class="form-control" name="phone" th:value="${employee.phone}" required/>
+            </div>
+
+            <div class="mb-3">
+                <label>Email</label>
+                <input class="form-control" name="email" th:value="${employee.email}"/>
+            </div>
+
+            <div class="mb-3">
+                <label>Chuyên môn</label>
+                <input class="form-control" name="specialization" th:value="${employee.specialization}"/>
+            </div>
+
+            <div class="mb-3">
+                <label>Ca làm việc</label>
+                <select class="form-select" name="shift">
+                    <option th:selected="${employee.shift == 'Sáng'}">Sáng</option>
+                    <option th:selected="${employee.shift == 'Chiều'}">Chiều</option>
+                    <option th:selected="${employee.shift == 'Tối'}">Tối</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label>Lương</label>
+                <input type="number" step="0.01" class="form-control" name="salary" th:value="${employee.salary}"/>
+            </div>
+
+            <div class="mb-3">
+                <label>Trạng thái</label>
+                <select class="form-select" name="status">
+                    <option th:selected="${employee.status == 'Đang làm'}">Đang làm</option>
+                    <option th:selected="${employee.status == 'Nghỉ'}">Nghỉ</option>
+                </select>
+            </div>
+
+            <button class="btn btn-primary">💾 Lưu</button>
+            <a th:href="@{/employee/list}" class="btn btn-secondary">⬅ Quay lại</a>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,46 @@
+<div th:fragment="content">
+    <div class="container mt-3">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4>👩‍💼 Danh sách nhân viên</h4>
+            <a th:href="@{/employee/new}" class="btn btn-success">+ Thêm mới</a>
+        </div>
+
+        <form method="get" th:action="@{/employee/list}" class="d-flex mb-3">
+            <input name="keyword" th:value="${keyword}" class="form-control me-2" placeholder="Tìm kiếm theo tên..."/>
+            <button class="btn btn-primary">Tìm kiếm</button>
+        </form>
+
+        <table class="table table-bordered table-hover align-middle">
+            <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Tên nhân viên</th>
+                <th>Chuyên môn</th>
+                <th>Ca làm việc</th>
+                <th>Lương</th>
+                <th>Trạng thái</th>
+                <th>Thao tác</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="e : ${employees}">
+                <td th:text="${e.id}"></td>
+                <td th:text="${e.fullName}"></td>
+                <td th:text="${e.specialization}"></td>
+                <td th:text="${e.shift}"></td>
+                <td th:text="${#numbers.formatDecimal(e.salary, 0, 'POINT', 0, 'COMMA')} + ' ₫'"></td>
+                <td>
+                        <span th:text="${e.status}"
+                              th:classappend="${e.status == 'Đang làm'} ? 'badge bg-success' : 'badge bg-secondary'"></span>
+                </td>
+                <td>
+                    <a th:href="@{'/employee/detail/' + ${e.id}}" class="btn btn-info btn-sm">Xem</a>
+                    <a th:href="@{'/employee/edit/' + ${e.id}}" class="btn btn-warning btn-sm">Sửa</a>
+                    <a th:href="@{'/employee/delete/' + ${e.id}}" class="btn btn-danger btn-sm"
+                       onclick="return confirm('Bạn có chắc muốn xóa?')">Xóa</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

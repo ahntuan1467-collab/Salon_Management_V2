@@ -1,0 +1,15 @@
+<div th:fragment="content">
+    <div class="container mt-3">
+        <h4>📋 Chi tiết Đặt lịch</h4>
+        <table class="table table-striped w-75">
+            <tr><th>ID</th><td th:text="${booking.id}"></td></tr>
+            <tr><th>Khách hàng</th><td th:text="${booking.customerName}"></td></tr>
+            <tr><th>Nhân viên</th><td th:text="${booking.employeeName}"></td></tr>
+            <tr><th>Dịch vụ</th><td th:text="${booking.serviceName}"></td></tr>
+            <tr><th>Thời gian</th><td th:text="${#temporals.format(booking.bookingTime, 'dd/MM/yyyy HH:mm')}"></td></tr>
+            <tr><th>Trạng thái</th><td th:text="${booking.status}"></td></tr>
+            <tr><th>Ghi chú</th><td th:text="${booking.note}"></td></tr>
+        </table>
+        <a th:href="@{/booking/list}" class="btn btn-secondary">⬅ Quay lại</a>
+    </div>
+</div>

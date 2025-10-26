@@ -1,0 +1,99 @@
+/* style.css - đặt ở src/main/resources/static/css/style.css */
+
+/* --- Reset nhẹ --- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html,body { height:100%; font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; color:#333; background:#fff; }
+
+/* --- Color tokens (điều chỉnh theo ảnh) --- */
+:root{
+    --bg-soft:#fff6f1;     /* pale peach background */
+    --header-bg:#6d645f;   /* top nav dark muted */
+    --accent-blue:#4776e6; /* button blue */
+    --card-bg:#f5f5f5;
+    --muted:#7a7270;
+    --shadow: 0 6px 0 rgba(0,0,0,0.06), 0 6px 12px rgba(0,0,0,0.06);
+}
+
+/* --- Header / Top bar --- */
+.site-top{ background:var(--header-bg); padding:12px 0; color:#fff; }
+.header-wrap{ max-width:1200px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; padding:8px 20px; }
+.brand-link{ text-decoration:none; color:#fff; display:flex; align-items:center; gap:12px;}
+.brand-logo{ font-family: "Great Vibes", cursive; font-size:28px; opacity:0.95; }
+.brand-name{ font-weight:600; font-size:22px; letter-spacing:0.6px; }
+
+/* main nav */
+.main-nav ul{ list-style:none; display:flex; gap:14px; align-items:center; }
+.main-nav a{ color:#fff; text-decoration:none; padding:14px 18px; background:rgba(255,255,255,0.03); border-left:1px solid rgba(255,255,255,0.06); }
+
+/* --- Page container --- */
+.container.page{ max-width:1200px; margin:24px auto; padding:0 20px; background:var(--bg-soft); }
+
+/* header of each page */
+.page-header{ background:#fff; border:1px solid #ddd; padding:28px; margin-bottom:18px; border-radius:4px; display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.page-header h2{ font-size:48px; font-weight:700; letter-spacing: -1px; }
+.page-header .subtitle{ color:var(--muted); font-size:18px; margin-top:6px; }
+
+/* back button */
+.btn-ghost.back{ background: #6d6462; color:#fff; padding:12px 20px; border-radius:10px; text-decoration:none; box-shadow: 0 6px 0 rgba(0,0,0,0.08); }
+
+/* --- Search box --- */
+.search-box{ padding:18px; background:var(--bg-soft); border-radius:8px; margin-bottom:16px; border:1px solid rgba(0,0,0,0.05); }
+.search-inner{ display:flex; gap:12px; align-items:center; }
+.search-inner label{ font-weight:600; color: #5b4f4c; width:150px; }
+.search-inner input{ flex:1; padding:14px 18px; border-radius:14px; border:1px solid #ddd; background:#fff; box-shadow: var(--shadow); }
+.btn-search{ background:var(--muted); color:#fff; padding:12px 18px; border-radius:10px; border:none; font-weight:700; }
+
+/* --- Table --- */
+.table-wrap{ margin-top:22px; }
+.data-table{ width:100%; border-collapse:collapse; background:#fff; border-radius:8px; overflow:hidden; box-shadow: 0 6px 16px rgba(0,0,0,0.04); }
+.data-table thead th{
+    background: var(--header-bg); color:#fff; text-align:left; padding:14px 12px; font-weight:700;
+}
+.data-table tbody td{ border-bottom:1px solid #e8e3e1; padding:18px 12px; vertical-align:middle; }
+.data-table tbody tr:hover td{ background: rgba(0,0,0,0.01); }
+.data-table .thumb{ width:80px; height:60px; object-fit:cover; border-radius:4px; box-shadow:0 2px 8px rgba(0,0,0,0.06); }
+.data-table .actions a{ margin-right:8px; color:var(--muted); text-decoration:none; font-size:18px; }
+
+/* Floating action button */
+.fab{ position:fixed; right:28px; bottom:28px; width:56px; height:56px; background:#6d6462; color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; text-decoration:none; box-shadow: 0 8px 18px rgba(0,0,0,0.12); }
+
+/* --- Card / Form --- */
+.card.form-card{ background:#fff; border:1px solid #ddd; padding:20px; border-radius:18px; box-shadow: var(--shadow); margin-top:10px; }
+.form-grid{ display:grid; grid-template-columns: 1fr 1fr; gap:20px; align-items:start; }
+.form-grid label{ display:block; font-weight:600; margin-bottom:8px; color:#4f4644; }
+.form-grid input, .form-grid textarea, .form-grid select{ width:100%; padding:10px 14px; border-radius:18px; border:1px solid #cfc7c5; background:#fff; }
+.form-actions{ margin-top:18px; display:flex; gap:12px; justify-content:flex-end; align-items:center; }
+.btn-primary{ display:block; background:var(--accent-blue); color:#fff; padding:18px; border-radius:14px; font-weight:800; letter-spacing:1px; border:none; width:100%; box-shadow: 0 6px 0 rgba(0,0,0,0.08); }
+.btn-secondary{ background:#6d6462; color:#fff; padding:12px 20px; border-radius:10px; border:none; }
+.btn-danger{ background:#000; color:#fff; padding:12px 20px; border-radius:10px; text-decoration:none; color:#fff; }
+
+/* --- Login page --- */
+.login-page{ min-height:80vh; display:flex; align-items:center; justify-content:center; background:var(--bg-soft); padding:40px 20px; }
+.login-card{ width:90%; max-width:720px; background:transparent; text-align:center; padding:40px 20px; }
+.logo-plate{ background: #f3f3f3; border-radius:20px; padding:30px; border:1px solid rgba(0,0,0,0.08); box-shadow: 0 6px 12px rgba(0,0,0,0.03); margin-bottom:28px;}
+.logo-text{ font-family: "Great Vibes", cursive; font-size:48px; color:#222; }
+.login-form{ max-width:800px; margin:0 auto; display:grid; gap:18px; }
+.login-form label{ text-align:left; font-weight:700; color:#4a3f3d; }
+.login-form input{ padding:16px 18px; border-radius:12px; border:1px solid #ddd; }
+
+/* small helpers */
+.container{ max-width:1200px; margin:0 auto; padding:0 20px; }
+.subtitle{ color:var(--muted); }
+
+/* --- Responsive --- */
+@media (max-width: 900px){
+    .form-grid{ grid-template-columns: 1fr; }
+    .page-header{ flex-direction:column; align-items:flex-start; gap:10px; }
+    .header-wrap{ flex-direction:column; align-items:flex-start; gap:12px; }
+    .main-nav ul{ flex-wrap:wrap; gap:8px; }
+    .page-header h2{ font-size:36px; }
+}
+
+@media (max-width: 480px){
+    .logo-text{ font-size:32px; }
+    .page-header h2{ font-size:28px; }
+    .brand-logo{ font-size:20px; }
+    .btn-ghost.back{ padding:10px 12px; font-size:14px; }
+    .data-table thead th{ font-size:12px; padding:10px; }
+    .data-table tbody td{ font-size:13px; padding:10px; }
+}

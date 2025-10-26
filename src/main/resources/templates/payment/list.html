@@ -1,0 +1,42 @@
+<div th:fragment="content">
+    <div class="container mt-3">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4>💰 Danh sách Thanh toán</h4>
+            <a th:href="@{/payment/new}" class="btn btn-success">+ Thêm mới</a>
+        </div>
+
+        <form method="get" th:action="@{/payment/list}" class="d-flex mb-3">
+            <input name="keyword" th:value="${keyword}" class="form-control me-2" placeholder="Tìm theo khách hàng..."/>
+            <button class="btn btn-primary">Tìm kiếm</button>
+        </form>
+
+        <table class="table table-bordered table-hover align-middle">
+            <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Khách hàng</th>
+                <th>Dịch vụ</th>
+                <th>Số tiền</th>
+                <th>Ngày thanh toán</th>
+                <th>Phương thức</th>
+                <th>Thao tác</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="p : ${payments}">
+                <td th:text="${p.id}"></td>
+                <td th:text="${p.customerName}"></td>
+                <td th:text="${p.serviceName}"></td>
+                <td th:text="${#numbers.formatDecimal(p.amount, 0, 'POINT', 0, 'COMMA')} + ' ₫'"></td>
+                <td th:text="${#temporals.format(p.paymentDate, 'dd/MM/yyyy HH:mm')}"></td>
+                <td th:text="${p.paymentMethod}"></td>
+                <td>
+                    <a th:href="@{'/payment/detail/' + ${p.id}}" class="btn btn-info btn-sm">Xem</a>
+                    <a th:href="@{'/payment/edit/' + ${p.id}}" class="btn btn-warning btn-sm">Sửa</a>
+                    <a th:href="@{'/payment/delete/' + ${p.id}}" class="btn btn-danger btn-sm" onclick="return confirm('Xóa thanh toán này?')">Xóa</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

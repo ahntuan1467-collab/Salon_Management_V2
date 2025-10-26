@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pageTitle} ?: 'Salon Management'">Salon Management</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"/>
+
+    <style>
+        body {
+            background: #f5f6fa;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 240px;
+            height: 100vh;
+            background: linear-gradient(180deg, #212529, #343a40);
+            color: #fff;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding-top: 20px;
+            overflow-y: auto;
+        }
+
+        .sidebar a {
+            display: block;
+            color: #ccc;
+            text-decoration: none;
+            padding: 12px 20px;
+            transition: all 0.2s ease;
+            font-size: 15px;
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            background: #495057;
+            color: #fff;
+        }
+
+        .sidebar h4 {
+            text-align: center;
+            color: #fff;
+            margin-bottom: 30px;
+        }
+
+        /* Content */
+        .content {
+            margin-left: 250px;
+            padding: 25px;
+        }
+
+        .navbar-custom {
+            background-color: #f8f9fa;
+            padding: 12px 20px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            border-radius: 6px;
+        }
+
+        .sidebar i {
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- ✅ Sidebar cố định -->
+<div class="sidebar" th:fragment="sidebar">
+    <h4>💈 Salon ATun</h4>
+    <a th:href="@{/dashboard}" th:classappend="${pageTitle == 'Dashboard'} ? 'active'">
+        <i class="bi bi-speedometer2"></i> Dashboard
+    </a>
+    <a th:href="@{/customer/list}" th:classappend="${pageTitle == 'Khách hàng'} ? 'active'">
+        <i class="bi bi-people"></i> Khách hàng
+    </a>
+    <a th:href="@{/booking/list}" th:classappend="${pageTitle == 'Đặt lịch'} ? 'active'">
+        <i class="bi bi-calendar-check"></i> Đặt lịch
+    </a>
+    <a th:href="@{/service/list}" th:classappend="${pageTitle == 'Dịch vụ'} ? 'active'">
+        <i class="bi bi-scissors"></i> Dịch vụ
+    </a>
+    <a th:href="@{/employee/list}" th:classappend="${pageTitle == 'Nhân viên'} ? 'active'">
+        <i class="bi bi-person-badge"></i> Nhân viên
+    </a>
+    <a th:href="@{/productusage/list}" th:classappend="${pageTitle == 'Sản phẩm'} ? 'active'">
+        <i class="bi bi-bag"></i> Sản phẩm
+    </a>
+    <a th:href="@{/payment/list}" th:classappend="${pageTitle == 'Thanh toán'} ? 'active'">
+        <i class="bi bi-cash-stack"></i> Thanh toán
+    </a>
+    <a th:href="@{/promotion/list}" th:classappend="${pageTitle == 'Khuyến mãi'} ? 'active'">
+        <i class="bi bi-gift"></i> Khuyến mãi
+    </a>
+</div>
+
+<!-- ✅ Nội dung chính -->
+<div class="content">
+    <div class="navbar-custom d-flex justify-content-between align-items-center">
+        <h5 class="m-0" th:text="${pageTitle} ?: 'Salon Management'"></h5>
+        <span class="text-secondary small">💈 Quản lý Salon ATun</span>
+    </div>
+
+    <!-- Trang con sẽ được chèn tại đây -->
+    <div th:replace="${content}"></div>
+</div>
+
+</body>
+</html>

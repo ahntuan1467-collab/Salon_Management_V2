@@ -1,0 +1,14 @@
+<div th:fragment="content">
+    <div class="container mt-3">
+        <h4>💇 Chi tiết Dịch vụ</h4>
+        <table class="table table-striped w-75">
+            <tr><th>ID</th><td th:text="${serviceItem.id}"></td></tr>
+            <tr><th>Tên dịch vụ</th><td th:text="${serviceItem.name}"></td></tr>
+            <tr><th>Giá</th><td th:text="${#numbers.formatDecimal(serviceItem.price, 0, 'POINT', 0, 'COMMA')} + ' ₫'"></td></tr>
+            <tr><th>Thời lượng</th><td th:text="${serviceItem.durationMinutes} + ' phút'"></td></tr>
+            <tr><th>Mô tả</th><td th:text="${serviceItem.description}"></td></tr>
+            <tr><th>Trạng thái</th><td th:text="${serviceItem.status}"></td></tr>
+        </table>
+        <a th:href="@{/service/list}" class="btn btn-secondary">⬅ Quay lại</a>
+    </div>
+</div>

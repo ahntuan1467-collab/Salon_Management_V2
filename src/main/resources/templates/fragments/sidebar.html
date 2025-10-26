@@ -1,0 +1,44 @@
+<!-- fragments/sidebar.html -->
+<div th:fragment="sidebar" class="sidebar">
+    <h4 class="text-center text-warning mb-4">💈 Salon ATun</h4>
+
+    <a th:href="@{/dashboard}"
+       th:classappend="${pageTitle == 'Dashboard'} ? 'active'">
+        <i class="bi bi-speedometer2 me-2"></i> Dashboard
+    </a>
+
+    <a th:href="@{/customer/list}"
+       th:classappend="${pageTitle == 'Khách hàng'} ? 'active'">
+        <i class="bi bi-people me-2"></i> Khách hàng
+    </a>
+
+    <a th:href="@{/employee/list}"
+       th:classappend="${pageTitle == 'Nhân viên'} ? 'active'">
+        <i class="bi bi-person-workspace me-2"></i> Nhân viên
+    </a>
+
+    <a th:href="@{/service/list}"
+       th:classappend="${pageTitle == 'Dịch vụ'} ? 'active'">
+        <i class="bi bi-scissors me-2"></i> Dịch vụ
+    </a>
+
+    <a th:href="@{/booking/list}"
+       th:classappend="${pageTitle == 'Đặt lịch'} ? 'active'">
+        <i class="bi bi-calendar-check me-2"></i> Đặt lịch
+    </a>
+
+    <a th:href="@{/payment/list}"
+       th:classappend="${pageTitle == 'Thanh toán'} ? 'active'">
+        <i class="bi bi-cash-coin me-2"></i> Thanh toán
+    </a>
+
+    <a th:href="@{/promotion/list}"
+       th:classappend="${pageTitle == 'Khuyến mãi'} ? 'active'">
+        <i class="bi bi-gift me-2"></i> Khuyến mãi
+    </a>
+
+    <a th:href="@{/productusage/list}"
+       th:classappend="${pageTitle == 'Sản phẩm'} ? 'active'">
+        <i class="bi bi-bag-check me-2"></i> Sản phẩm
+    </a>
+</div>

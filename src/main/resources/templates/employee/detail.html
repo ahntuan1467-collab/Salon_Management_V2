@@ -1,0 +1,16 @@
+<div th:fragment="content">
+    <div class="container mt-3">
+        <h4>👩‍💼 Thông tin chi tiết nhân viên</h4>
+        <table class="table table-striped w-75">
+            <tr><th>ID</th><td th:text="${employee.id}"></td></tr>
+            <tr><th>Tên</th><td th:text="${employee.fullName}"></td></tr>
+            <tr><th>SĐT</th><td th:text="${employee.phone}"></td></tr>
+            <tr><th>Email</th><td th:text="${employee.email}"></td></tr>
+            <tr><th>Chuyên môn</th><td th:text="${employee.specialization}"></td></tr>
+            <tr><th>Ca làm</th><td th:text="${employee.shift}"></td></tr>
+            <tr><th>Lương</th><td th:text="${#numbers.formatDecimal(employee.salary, 0, 'POINT', 0, 'COMMA')} + ' ₫'"></td></tr>
+            <tr><th>Trạng thái</th><td th:text="${employee.status}"></td></tr>
+        </table>
+        <a th:href="@{/employee/list}" class="btn btn-secondary">⬅ Quay lại</a>
+    </div>
+</div>

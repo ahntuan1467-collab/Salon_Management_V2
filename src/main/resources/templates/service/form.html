@@ -1,0 +1,40 @@
+<div th:fragment="content">
+    <div class="container mt-3">
+        <h4 th:text="${serviceItem.id == null ? '➕ Thêm dịch vụ' : '✏️ Cập nhật dịch vụ'}"></h4>
+
+        <!-- ✅ Dòng này đã được sửa -->
+        <form th:action="${serviceItem.id == null} ? @{/service/save} : @{'/service/update/' + serviceItem.id}" method="post">
+
+            <div class="mb-3">
+                <label>Tên dịch vụ</label>
+                <input class="form-control" name="name" th:value="${serviceItem.name}" required/>
+            </div>
+
+            <div class="mb-3">
+                <label>Giá (VNĐ)</label>
+                <input type="number" class="form-control" name="price" th:value="${serviceItem.price}" required/>
+            </div>
+
+            <div class="mb-3">
+                <label>Thời lượng (phút)</label>
+                <input type="number" class="form-control" name="durationMinutes" th:value="${serviceItem.durationMinutes}" required/>
+            </div>
+
+            <div class="mb-3">
+                <label>Mô tả</label>
+                <textarea class="form-control" name="description" rows="3" th:text="${serviceItem.description}"></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label>Trạng thái</label>
+                <select class="form-select" name="status">
+                    <option th:selected="${serviceItem.status == 'Đang hoạt động'}">Đang hoạt động</option>
+                    <option th:selected="${serviceItem.status == 'Tạm ngưng'}">Tạm ngưng</option>
+                </select>
+            </div>
+
+            <button class="btn btn-primary">💾 Lưu</button>
+            <a th:href="@{/service/list}" class="btn btn-secondary">⬅ Quay lại</a>
+        </form>
+    </div>
+</div>

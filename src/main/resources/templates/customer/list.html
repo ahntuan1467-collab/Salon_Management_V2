@@ -1,0 +1,41 @@
+<div th:fragment="content">
+    <div class="container mt-3">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4>👥 Danh sách khách hàng</h4>
+            <a th:href="@{/customer/new}" class="btn btn-success">+ Thêm mới</a>
+        </div>
+
+        <form method="get" th:action="@{/customer/list}" class="d-flex mb-3">
+            <input name="keyword" th:value="${keyword}" class="form-control me-2" placeholder="Tìm kiếm theo tên..."/>
+            <button class="btn btn-primary">Tìm kiếm</button>
+        </form>
+
+        <table class="table table-bordered table-hover align-middle">
+            <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Tên khách hàng</th>
+                <th>Điện thoại</th>
+                <th>Email</th>
+                <th>Thành viên</th>
+                <th>Thao tác</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="c : ${customers}">
+                <td th:text="${c.id}"></td>
+                <td th:text="${c.name}"></td>
+                <td th:text="${c.phone}"></td>
+                <td th:text="${c.email}"></td>
+                <td th:text="${c.memberType}"></td>
+                <td>
+                    <a th:href="@{'/customer/detail/' + ${c.id}}" class="btn btn-info btn-sm">Xem</a>
+                    <a th:href="@{'/customer/edit/' + ${c.id}}" class="btn btn-warning btn-sm">Sửa</a>
+                    <a th:href="@{'/customer/delete/' + ${c.id}}" class="btn btn-danger btn-sm"
+                       onclick="return confirm('Bạn có chắc muốn xóa?')">Xóa</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,17 @@
+<div th:fragment="content">
+    <div class="container mt-3">
+        <h4>🏷 Chi tiết Khuyến mãi</h4>
+        <table class="table table-striped w-75">
+            <tr><th>ID</th><td th:text="${promotion.id}"></td></tr>
+            <tr><th>Mã</th><td th:text="${promotion.code}"></td></tr>
+            <tr><th>Tên</th><td th:text="${promotion.name}"></td></tr>
+            <tr><th>Giảm giá</th><td th:text="${promotion.discount} + '%'"></td></tr>
+            <tr><th>Thời gian</th>
+                <td th:text="${#temporals.format(promotion.startDate, 'dd/MM/yyyy')} + ' - ' + ${#temporals.format(promotion.endDate, 'dd/MM/yyyy')}"></td>
+            </tr>
+            <tr><th>Mô tả</th><td th:text="${promotion.description}"></td></tr>
+            <tr><th>Trạng thái</th><td th:text="${promotion.status}"></td></tr>
+        </table>
+        <a th:href="@{/promotion/list}" class="btn btn-secondary">⬅ Quay lại</a>
+    </div>
+</div>

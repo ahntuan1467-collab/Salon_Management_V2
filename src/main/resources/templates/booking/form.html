@@ -1,0 +1,69 @@
+<div th:fragment="content">
+    <div class="container mt-3">
+        <h4 th:text="${booking.id == null ? '➕ Thêm đặt lịch' : '✏️ Cập nhật đặt lịch'}"></h4>
+
+        <!-- ✅ Dòng th:action đã được sửa cú pháp -->
+        <form th:action="${booking.id == null} ? @{/booking/save} : @{'/booking/update/' + booking.id}" method="post">
+
+            <div class="mb-3">
+                <label>Khách hàng</label>
+                <select name="customerId" class="form-select" required>
+                    <option th:each="c : ${customers}"
+                            th:value="${c.id}"
+                            th:text="${c.name}"
+                            th:selected="${booking.customerId == c.id}">
+                    </option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label>Nhân viên</label>
+                <select name="employeeId" class="form-select" required>
+                    <option th:each="e : ${employees}"
+                            th:value="${e.id}"
+                            th:text="${e.fullName}"
+                            th:selected="${booking.employeeId == e.id}">
+                    </option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label>Dịch vụ</label>
+                <select name="serviceId" class="form-select" required>
+                    <option th:each="s : ${services}"
+                            th:value="${s.id}"
+                            th:text="${s.name}"
+                            th:selected="${booking.serviceId == s.id}">
+                    </option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label>Thời gian đặt</label>
+                <input type="datetime-local"
+                       name="bookingTime"
+                       class="form-control"
+                       th:value="${#temporals.format(booking.bookingTime, 'yyyy-MM-dd''T''HH:mm')}"
+
+                       required>
+            </div>
+
+            <div class="mb-3">
+                <label>Trạng thái</label>
+                <select class="form-select" name="status">
+                    <option th:selected="${booking.status == 'Đang chờ'}">Đang chờ</option>
+                    <option th:selected="${booking.status == 'Hoàn thành'}">Hoàn thành</option>
+                    <option th:selected="${booking.status == 'Hủy'}">Hủy</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label>Ghi chú</label>
+                <textarea name="note" class="form-control" th:text="${booking.note}"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary">💾 Lưu</button>
+            <a th:href="@{/booking/list}" class="btn btn-secondary">⬅ Quay lại</a>
+        </form>
+    </div>
+</div>
