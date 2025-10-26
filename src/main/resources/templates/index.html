@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml" lang="vi">
 <head>
     <meta charset="UTF-8">
     <title>Dashboard - Salon Management</title>
@@ -155,7 +155,7 @@
         <a th:href="@{/promotion/list}"><i class="bi bi-gift me-2"></i> Khuyến mãi</a>
         <a th:href="@{/productusage/list}"><i class="bi bi-bag-check me-2"></i> Sản phẩm</a>
     </div>
-
+    <div class="main-content" layout:fragment="content">
     <!-- ✅ MAIN CONTENT -->
     <div class="main-content container-fluid">
         <div class="top-bar">
@@ -194,6 +194,23 @@
     </div>
 </div>
 
+<!-- ✅ Cách xuất JSON an toàn -->
+<script th:inline="javascript">
+    const monthsData = /*[[${months}]]*/ [];
+    const revenuesData = /*[[${revenues}]]*/ [];
+    const memberTypesData = /*[[${memberTypes}]]*/ [];
+    const memberCountsData = /*[[${memberCounts}]]*/ [];
+    const bookingDaysData = /*[[${bookingDays}]]*/ [];
+    const bookingCountsData = /*[[${bookingCounts}]]*/ [];
+    const topServiceNamesData = /*[[${topServiceNames}]]*/ [];
+    const topServiceRevenueData = /*[[${topServiceRevenue}]]*/ [];
+    const topEmployeeNamesData = /*[[${topEmployeeNames}]]*/ [];
+    const topEmployeeBookingsData = /*[[${topEmployeeBookings}]]*/ [];
+    const topBookedServicesData = /*[[${topBookedServices}]]*/ [];
+    const topBookedCountsData = /*[[${topBookedCounts}]]*/ [];
+</script>
+
+<!-- ✅ JS file -->
 <script src="/js/dashboard.js"></script>
 </body>
 </html>

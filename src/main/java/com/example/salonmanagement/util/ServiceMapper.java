@@ -7,7 +7,7 @@ public class ServiceMapper {
 
     public static ServiceDTO toDTO(ServiceEntity entity) {
         if (entity == null) return null;
-        return ServiceDTO.builder()
+        ServiceDTO build = ServiceDTO.builder()
                 .id(entity.getId())
                 .name(entity.getName())
                 .price(entity.getPrice())
@@ -15,6 +15,7 @@ public class ServiceMapper {
                 .description(entity.getDescription())
                 .status(entity.getStatus())
                 .build();
+        return build;
     }
 
     public static ServiceEntity toEntity(ServiceDTO dto) {

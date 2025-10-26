@@ -12,6 +12,8 @@
         body {
             background: #f5f6fa;
             font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
         }
 
         /* Sidebar */
@@ -52,6 +54,7 @@
         .content {
             margin-left: 250px;
             padding: 25px;
+            min-height: calc(100vh - 60px); /* trừ footer */
         }
 
         .navbar-custom {
@@ -64,6 +67,30 @@
 
         .sidebar i {
             margin-right: 8px;
+        }
+
+        /* ✅ Footer cố định đáy trang */
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 240px;
+            width: calc(100% - 240px);
+            background-color: #ffffff;
+            border-top: 1px solid #dee2e6;
+            box-shadow: 0 -2px 4px rgba(0,0,0,0.05);
+            color: #555;
+            text-align: center;
+            padding: 10px 20px;
+            font-size: 0.9rem;
+            z-index: 50;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
         }
     </style>
 </head>
@@ -107,6 +134,14 @@
 
     <!-- Trang con sẽ được chèn tại đây -->
     <div th:replace="${content}"></div>
+</div>
+
+<!-- ✅ Footer -->
+<div class="footer" th:fragment="footer">
+    <div class="footer-content">
+        <span>© 2025 Hệ thống quản lý Salon ATun</span>
+        <span>Developed by <strong>Nhóm BIT2302</strong></span>
+    </div>
 </div>
 
 </body>

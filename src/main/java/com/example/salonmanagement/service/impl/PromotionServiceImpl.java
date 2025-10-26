@@ -50,4 +50,12 @@ public class PromotionServiceImpl implements PromotionService {
     public void delete(Long id) {
         repo.deleteById(id);
     }
+
+    // ✅ Thêm mới: lấy danh sách khuyến mãi đang hoạt động
+    @Override
+    public List<PromotionDTO> findActivePromotions() {
+        return repo.findByStatus("Hoạt động").stream()
+                .map(PromotionMapper::toDTO)
+                .collect(Collectors.toList());
+    }
 }

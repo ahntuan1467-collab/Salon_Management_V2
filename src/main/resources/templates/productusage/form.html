@@ -2,26 +2,46 @@
     <div class="container mt-3">
         <h4 th:text="${product.id == null ? '➕ Thêm Sản phẩm sử dụng' : '✏️ Cập nhật Sản phẩm sử dụng'}"></h4>
 
-        <!-- ✅ ĐÃ SỬA LẠI CÚ PHÁP TH:ACTION -->
+        <!-- ✅ Cú pháp th:action đúng -->
         <form th:action="${product.id == null} ? @{/productusage/save} : @{'/productusage/update/' + product.id}" method="post">
+
+            <!-- Tên sản phẩm -->
             <div class="mb-3">
-                <label>Tên sản phẩm</label>
-                <input class="form-control" name="productName" th:value="${product.productName}" required />
+                <label for="productName" class="form-label">Tên sản phẩm</label>
+                <input id="productName" class="form-control" name="productName"
+                       th:value="${product.productName}" required />
             </div>
 
+            <!-- Số lượng -->
             <div class="mb-3">
-                <label>Số lượng</label>
-                <input type="number" class="form-control" name="quantityUsed" th:value="${product.quantityUsed}" required />
+                <label for="quantityUsed" class="form-label">Số lượng</label>
+                <input id="quantityUsed" type="number" class="form-control"
+                       name="quantityUsed" min="1"
+                       th:value="${product.quantityUsed}" required />
             </div>
 
+            <!-- ✅ Đơn vị: thay input bằng dropdown -->
             <div class="mb-3">
-                <label>Đơn vị</label>
-                <input class="form-control" name="unit" th:value="${product.unit}" required />
+                <label for="unit" class="form-label">Đơn vị</label>
+                <select id="unit" class="form-select" name="unit" required>
+                    <option value="">-- Chọn đơn vị --</option>
+                    <option value="Chai" th:selected="${product.unit == 'Chai'}">Chai</option>
+                    <option value="Cái" th:selected="${product.unit == 'Cái'}">Cái</option>
+                    <option value="Túi" th:selected="${product.unit == 'Túi'}">Túi</option>
+                    <option value="Chiếc" th:selected="${product.unit == 'Chiếc'}">Chiếc</option>
+                    <option value="Lọ" th:selected="${product.unit == 'Lọ'}">Lọ</option>
+                    <option value="Hộp" th:selected="${product.unit == 'Hộp'}">Hộp</option>
+                    <option value="Bình" th:selected="${product.unit == 'Bình'}">Bình</option>
+                    <option value="Thùng" th:selected="${product.unit == 'Thùng'}">Thùng</option>
+                    <option value="Gói" th:selected="${product.unit == 'Gói'}">Gói</option>
+                </select>
             </div>
 
+            <!-- Booking sử dụng -->
             <div class="mb-3">
-                <label>Booking sử dụng</label>
-                <select name="bookingId" class="form-select" required>
+                <label for="bookingId" class="form-label">Booking sử dụng</label>
+                <select id="bookingId" name="bookingId" class="form-select" required>
+                    <option value="">-- Chọn Booking --</option>
                     <option th:each="b : ${bookings}"
                             th:value="${b.id}"
                             th:text="${b.customer.name + ' - ' + b.service.name}"
@@ -30,6 +50,7 @@
                 </select>
             </div>
 
+            <!-- Nút hành động -->
             <button type="submit" class="btn btn-primary">💾 Lưu</button>
             <a th:href="@{/productusage/list}" class="btn btn-secondary">⬅ Quay lại</a>
         </form>

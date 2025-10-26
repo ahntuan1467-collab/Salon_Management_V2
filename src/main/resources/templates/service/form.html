@@ -2,39 +2,73 @@
     <div class="container mt-3">
         <h4 th:text="${serviceItem.id == null ? '➕ Thêm dịch vụ' : '✏️ Cập nhật dịch vụ'}"></h4>
 
-        <!-- ✅ Dòng này đã được sửa -->
-        <form th:action="${serviceItem.id == null} ? @{/service/save} : @{'/service/update/' + serviceItem.id}" method="post">
+        <!-- ✅ Form động (th:object để bind trực tiếp DTO) -->
+        <form th:action="${serviceItem.id == null} ? @{/service/save} : @{'/service/update/' + serviceItem.id}"
+              th:object="${serviceItem}"
+              method="post"
+              class="needs-validation" novalidate>
 
+            <!-- 🔹 Tên dịch vụ -->
             <div class="mb-3">
-                <label>Tên dịch vụ</label>
-                <input class="form-control" name="name" th:value="${serviceItem.name}" required/>
-            </div>
-
-            <div class="mb-3">
-                <label>Giá (VNĐ)</label>
-                <input type="number" class="form-control" name="price" th:value="${serviceItem.price}" required/>
-            </div>
-
-            <div class="mb-3">
-                <label>Thời lượng (phút)</label>
-                <input type="number" class="form-control" name="durationMinutes" th:value="${serviceItem.durationMinutes}" required/>
-            </div>
-
-            <div class="mb-3">
-                <label>Mô tả</label>
-                <textarea class="form-control" name="description" rows="3" th:text="${serviceItem.description}"></textarea>
-            </div>
-
-            <div class="mb-3">
-                <label>Trạng thái</label>
-                <select class="form-select" name="status">
-                    <option th:selected="${serviceItem.status == 'Đang hoạt động'}">Đang hoạt động</option>
-                    <option th:selected="${serviceItem.status == 'Tạm ngưng'}">Tạm ngưng</option>
+                <label for="name" class="form-label">Tên dịch vụ</label>
+                <select class="form-select" id="name" th:field="*{name}" required>
+                    <option value="">-- Chọn dịch vụ --</option>
+                    <option value="Cắt tóc">Cắt tóc</option>
+                    <option value="Nhuộm tóc">Nhuộm tóc</option>
+                    <option value="Massage">Massage</option>
+                    <option value="Gội đầu">Gội đầu</option>
+                    <option value="Làm móng">Làm móng</option>
+                    <option value="Uốn tóc">Uốn tóc</option>
+                    <option value="Tẩy tế bào chết">Tẩy tế bào chết</option>
                 </select>
+                <div class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
             </div>
 
-            <button class="btn btn-primary">💾 Lưu</button>
-            <a th:href="@{/service/list}" class="btn btn-secondary">⬅ Quay lại</a>
+            <!-- 🔹 Giá (VNĐ) -->
+            <div class="mb-3">
+                <label for="price" class="form-label">Giá (VNĐ)</label>
+                <input type="number" class="form-control" id="price"
+                       th:field="*{price}" placeholder="Nhập giá dịch vụ"
+                       min="10000" step="1000" required>
+                <small class="text-muted">Giá tối thiểu 10.000 VNĐ</small>
+                <div class="text-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
+            </div>
+
+            <!-- 🔹 Thời lượng -->
+            <div class="mb-3">
+                <label for="durationMinutes" class="form-label">Thời lượng (phút)</label>
+                <input type="number" class="form-control" id="durationMinutes"
+                       th:field="*{durationMinutes}" placeholder="Nhập thời lượng (phút)"
+                       min="10" max="300" required>
+                <small class="text-muted">Tối thiểu 10 phút, tối đa 300 phút</small>
+                <div class="text-danger" th:if="${#fields.hasErrors('durationMinutes')}" th:errors="*{durationMinutes}"></div>
+            </div>
+
+            <!-- 🔹 Mô tả -->
+            <div class="mb-3">
+                <label for="description" class="form-label">Mô tả</label>
+                <textarea class="form-control" id="description"
+                          th:field="*{description}"
+                          rows="3" placeholder="Nhập mô tả chi tiết (nếu có)"></textarea>
+                <div class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+            </div>
+
+            <!-- 🔹 Trạng thái -->
+            <div class="mb-3">
+                <label for="status" class="form-label">Trạng thái</label>
+                <select class="form-select" id="status" th:field="*{status}" required>
+                    <option value="">-- Chọn trạng thái --</option>
+                    <option value="Đang hoạt động">Đang hoạt động</option>
+                    <option value="Tạm ngưng">Tạm ngưng</option>
+                </select>
+                <div class="text-danger" th:if="${#fields.hasErrors('status')}" th:errors="*{status}"></div>
+            </div>
+
+            <!-- 🔹 Nút hành động -->
+            <div class="mt-4">
+                <button class="btn btn-primary"><i class="bi bi-save"></i> 💾 Lưu</button>
+                <a th:href="@{/service/list}" class="btn btn-secondary">⬅ Quay lại</a>
+            </div>
         </form>
     </div>
 </div>

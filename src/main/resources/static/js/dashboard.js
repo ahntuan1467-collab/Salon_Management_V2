@@ -1,118 +1,140 @@
-// === Hiệu ứng đếm số tăng dần + hiển thị KPI ===
-document.addEventListener("DOMContentLoaded", function () {
+// ✅ Dữ liệu được Thymeleaf inject trực tiếp từ index.html
+const months = typeof monthsData !== "undefined" ? monthsData : [];
+const revenues = typeof revenuesData !== "undefined" ? revenuesData : [];
+const memberTypes = typeof memberTypesData !== "undefined" ? memberTypesData : [];
+const memberCounts = typeof memberCountsData !== "undefined" ? memberCountsData : [];
+const bookingDays = typeof bookingDaysData !== "undefined" ? bookingDaysData : [];
+const bookingCounts = typeof bookingCountsData !== "undefined" ? bookingCountsData : [];
+const topServiceNames = typeof topServiceNamesData !== "undefined" ? topServiceNamesData : [];
+const topServiceRevenue = typeof topServiceRevenueData !== "undefined" ? topServiceRevenueData : [];
+const topEmployeeNames = typeof topEmployeeNamesData !== "undefined" ? topEmployeeNamesData : [];
+const topEmployeeBookings = typeof topEmployeeBookingsData !== "undefined" ? topEmployeeBookingsData : [];
+const topBookedServices = typeof topBookedServicesData !== "undefined" ? topBookedServicesData : [];
+const topBookedCounts = typeof topBookedCountsData !== "undefined" ? topBookedCountsData : [];
 
-    // 1️⃣ Count-Up Animation
-    function animateCountUp(element, target, duration = 2000) {
-        let start = 0;
-        const increment = target / (duration / 16);
-        const timer = setInterval(() => {
-            start += increment;
-            if (start >= target) {
-                start = target;
-                clearInterval(timer);
+// ✅ Biểu đồ Doanh thu theo tháng
+if (document.getElementById('revenueChart')) {
+    new Chart(document.getElementById('revenueChart'), {
+        type: 'bar',
+        data: {
+            labels: months.map(m => 'Th' + m),
+            datasets: [{
+                label: 'Doanh thu (VNĐ)',
+                data: revenues,
+                borderWidth: 1,
+                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                borderColor: 'rgba(54, 162, 235, 1)'
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: ctx => ctx.raw.toLocaleString() + ' ₫'
+                    }
+                }
+            },
+            scales: {
+                y: { beginAtZero: true, ticks: { callback: val => val.toLocaleString() } }
             }
-            // Hiển thị định dạng số với dấu phẩy
-            element.textContent = Math.floor(start).toLocaleString('vi-VN');
-        }, 16);
-    }
-
-    // Áp dụng Count-Up
-    document.querySelectorAll(".count").forEach(counter => {
-        const value = parseInt(counter.dataset.value);
-        animateCountUp(counter, value, 1800);
-    });
-
-    // 2️⃣ Hiển thị KPI (+/- %)
-    document.querySelectorAll(".kpi").forEach(kpi => {
-        const change = parseFloat(kpi.dataset.change);
-        if (change > 0) {
-            kpi.classList.add("positive");
-            kpi.innerHTML = `+${change}% 📈`;
-        } else if (change < 0) {
-            kpi.classList.add("negative");
-            kpi.innerHTML = `${change}% 📉`;
-        } else {
-            kpi.classList.add("neutral");
-            kpi.innerHTML = `0%`;
         }
     });
+}
 
-    // 3️⃣ Biểu đồ mẫu (hiển thị khung sẵn)
-    const createChart = (id, type, data, color) => {
-        const ctx = document.getElementById(id);
-        if (!ctx) return;
-        new Chart(ctx, {
-            type: type,
-            data: data,
-            options: {
-                responsive: true,
-                animation: { duration: 1200, easing: 'easeOutQuart' },
-                plugins: { legend: { display: false } },
-                scales: { y: { beginAtZero: true } }
-            }
-        });
-    };
-
-    // === Các biểu đồ demo có sẵn ===
-    createChart("revenueChart", "bar", {
-        labels: ["Th1", "Th2", "Th3", "Th4", "Th5", "Th6"],
-        datasets: [{
-            label: "Doanh thu (triệu ₫)",
-            data: [12, 15, 20, 18, 22, 25],
-            backgroundColor: "rgba(54, 162, 235, 0.6)"
-        }]
+// ✅ Biểu đồ Khách hàng theo loại
+if (document.getElementById('memberPieChart')) {
+    new Chart(document.getElementById('memberPieChart'), {
+        type: 'pie',
+        data: {
+            labels: memberTypes,
+            datasets: [{
+                data: memberCounts,
+                backgroundColor: ['#36A2EB', '#FF6384', '#FFCE56', '#4BC0C0']
+            }]
+        },
+        options: {
+            plugins: { legend: { position: 'bottom' } }
+        }
     });
+}
 
-    createChart("memberPieChart", "pie", {
-        labels: ["Thường", "VIP", "Vàng", "Bạch Kim"],
-        datasets: [{
-            data: [40, 25, 20, 15],
-            backgroundColor: [
-                "rgba(255,99,132,0.7)",
-                "rgba(54,162,235,0.7)",
-                "rgba(255,206,86,0.7)",
-                "rgba(75,192,192,0.7)"
-            ]
-        }]
+// ✅ Booking theo ngày
+if (document.getElementById('bookingLineChart')) {
+    new Chart(document.getElementById('bookingLineChart'), {
+        type: 'line',
+        data: {
+            labels: bookingDays.map(d => 'Ngày ' + d),
+            datasets: [{
+                label: 'Số booking',
+                data: bookingCounts,
+                fill: true,
+                borderColor: '#0d6efd',
+                backgroundColor: 'rgba(13,110,253,0.1)',
+                tension: 0.3
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { display: false } }
+        }
     });
+}
 
-    createChart("bookingLineChart", "line", {
-        labels: ["1", "5", "10", "15", "20", "25", "30"],
-        datasets: [{
-            label: "Số lượng Booking",
-            data: [3, 4, 6, 8, 5, 7, 9],
-            borderColor: "rgba(75,192,192,1)",
-            backgroundColor: "rgba(75,192,192,0.2)",
-            fill: true,
-            tension: 0.3
-        }]
+// ✅ Top 5 dịch vụ doanh thu cao
+if (document.getElementById('topServiceChart')) {
+    new Chart(document.getElementById('topServiceChart'), {
+        type: 'bar',
+        data: {
+            labels: topServiceNames,
+            datasets: [{
+                label: 'Doanh thu (VNĐ)',
+                data: topServiceRevenue,
+                backgroundColor: 'rgba(255, 159, 64, 0.6)',
+                borderColor: 'rgba(255, 159, 64, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            plugins: { legend: { display: false } },
+            scales: { y: { beginAtZero: true } }
+        }
     });
+}
 
-    createChart("topServiceChart", "bar", {
-        labels: ["Cắt tóc", "Nhuộm", "Massage", "Gội đầu", "Làm móng"],
-        datasets: [{
-            label: "Doanh thu (triệu ₫)",
-            data: [50, 45, 30, 25, 20],
-            backgroundColor: "#FF9F40"
-        }]
+// ✅ Top nhân viên nhiều booking
+if (document.getElementById('topEmployeeChart')) {
+    new Chart(document.getElementById('topEmployeeChart'), {
+        type: 'bar',
+        data: {
+            labels: topEmployeeNames,
+            datasets: [{
+                label: 'Số booking',
+                data: topEmployeeBookings,
+                backgroundColor: 'rgba(153, 102, 255, 0.6)',
+                borderColor: 'rgba(153, 102, 255, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: { plugins: { legend: { display: false } } }
     });
+}
 
-    createChart("topEmployeeChart", "bar", {
-        labels: ["Ngọc", "Minh", "Tuấn", "Hà", "Phương"],
-        datasets: [{
-            label: "Lượt đặt",
-            data: [30, 25, 28, 22, 18],
-            backgroundColor: "#9966FF"
-        }]
+// ✅ Dịch vụ được đặt nhiều
+if (document.getElementById('topBookedServiceChart')) {
+    new Chart(document.getElementById('topBookedServiceChart'), {
+        type: 'bar',
+        data: {
+            labels: topBookedServices,
+            datasets: [{
+                label: 'Số lần đặt',
+                data: topBookedCounts,
+                backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: { plugins: { legend: { display: false } } }
     });
-
-    createChart("topBookedServiceChart", "bar", {
-        labels: ["Cắt tóc", "Gội đầu", "Làm móng", "Massage", "Nhuộm"],
-        datasets: [{
-            label: "Lượt đặt",
-            data: [120, 90, 75, 60, 55],
-            backgroundColor: "#4BC0C0"
-        }]
-    });
-
-});
+}

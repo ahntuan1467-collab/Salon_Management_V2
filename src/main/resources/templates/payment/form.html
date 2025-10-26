@@ -2,37 +2,92 @@
     <div class="container mt-3">
         <h4 th:text="${payment.id == null ? '➕ Thêm thanh toán' : '✏️ Cập nhật thanh toán'}"></h4>
 
-        <!-- ✅ Cú pháp th:action đúng -->
-        <form th:action="${payment.id == null} ? @{/payment/save} : @{'/payment/update/' + payment.id}" method="post">
+        <form th:action="${payment.id == null} ? @{/payment/save} : @{'/payment/update/' + payment.id}"
+              method="post">
 
+            <!-- 🔹 Booking -->
             <div class="mb-3">
-                <label>Chọn Booking</label>
-                <select name="bookingId" class="form-select" required>
+                <label for="bookingId" class="form-label">Chọn Booking</label>
+                <select id="bookingId" name="bookingId" class="form-select" required onchange="updateServicePrice()">
+                    <option value="">-- Chọn Booking --</option>
                     <option th:each="b : ${bookings}"
                             th:value="${b.id}"
                             th:text="${b.customer.name + ' - ' + b.service.name}"
+                            th:data-price="${b.service.price}"
                             th:selected="${payment.bookingId == b.id}">
                     </option>
                 </select>
             </div>
 
+            <!-- 🔹 Giá dịch vụ -->
             <div class="mb-3">
-                <label>Số tiền (VNĐ)</label>
-                <input type="number" class="form-control" name="amount"
-                       th:value="${payment.amount}" required/>
+                <label for="servicePrice" class="form-label">Giá dịch vụ (VNĐ)</label>
+                <input id="servicePrice" type="number" class="form-control" name="servicePrice"
+                       th:value="${payment.servicePrice}" readonly />
             </div>
 
+            <!-- 🔹 Chọn Khuyến mãi -->
             <div class="mb-3">
-                <label>Phương thức thanh toán</label>
-                <select class="form-select" name="paymentMethod">
-                    <option th:selected="${payment.paymentMethod == 'Tiền mặt'}">Tiền mặt</option>
-                    <option th:selected="${payment.paymentMethod == 'Thẻ'}">Thẻ</option>
-                    <option th:selected="${payment.paymentMethod == 'Chuyển khoản'}">Chuyển khoản</option>
+                <label for="promotionId" class="form-label">Chọn Khuyến mãi (nếu có)</label>
+                <select id="promotionId" name="promotionId" class="form-select" onchange="applyPromotion()">
+                    <option value="">-- Không áp dụng khuyến mãi --</option>
+                    <option th:each="p : ${promotions}"
+                            th:value="${p.id}"
+                            th:data-discount="${p.discount}"
+                            th:text="${p.code + ' - ' + p.name + ' (' + p.discount + '%)'}"
+                            th:selected="${payment.promotionId == p.id}">
+                    </option>
                 </select>
             </div>
 
+            <!-- 🔹 Tổng tiền -->
+            <div class="mb-3">
+                <label for="finalAmount" class="form-label">Tổng tiền thanh toán (VNĐ)</label>
+                <input id="finalAmount" type="number" class="form-control" name="amount"
+                       th:value="${payment.amount}" required readonly />
+            </div>
+
+            <!-- 🔹 Phương thức thanh toán -->
+            <div class="mb-3">
+                <label for="paymentMethod" class="form-label">Phương thức thanh toán</label>
+                <select id="paymentMethod" class="form-select" name="paymentMethod" required>
+                    <option value="Tiền mặt" th:selected="${payment.paymentMethod == 'Tiền mặt'}">Tiền mặt</option>
+                    <option value="Chuyển khoản" th:selected="${payment.paymentMethod == 'Chuyển khoản'}">Chuyển khoản</option>
+                    <option value="Thẻ" th:selected="${payment.paymentMethod == 'Thẻ'}">Thẻ</option>
+                    <option value="QR" th:selected="${payment.paymentMethod == 'QR'}">QR</option>
+                </select>
+            </div>
+
+            <!-- 🔹 Nút hành động -->
             <button type="submit" class="btn btn-primary">💾 Lưu</button>
             <a th:href="@{/payment/list}" class="btn btn-secondary">⬅ Quay lại</a>
         </form>
     </div>
 </div>
+
+<!-- ✅ JavaScript xử lý tự động giá + khuyến mãi -->
+<script>
+    // Khi chọn booking → hiển thị giá dịch vụ
+    function updateServicePrice() {
+        const bookingSelect = document.getElementById('bookingId');
+        const selectedOption = bookingSelect.options[bookingSelect.selectedIndex];
+        const price = selectedOption.getAttribute('data-price') || 0;
+
+        document.getElementById('servicePrice').value = price;
+        document.getElementById('finalAmount').value = price;
+
+        // Reset khuyến mãi khi chọn booking mới
+        document.getElementById('promotionId').selectedIndex = 0;
+    }
+
+    // Khi chọn khuyến mãi → tính giảm giá
+    function applyPromotion() {
+        const promoSelect = document.getElementById('promotionId');
+        const discount = parseFloat(promoSelect.options[promoSelect.selectedIndex].getAttribute('data-discount') || 0);
+        const price = parseFloat(document.getElementById('servicePrice').value || 0);
+
+        // ✅ discount là 15 (nghĩa là 15%), nên phải chia 100
+        const finalPrice = price - (price * (discount / 100));
+        document.getElementById('finalAmount').value = finalPrice.toFixed(0);
+    }
+</script>
