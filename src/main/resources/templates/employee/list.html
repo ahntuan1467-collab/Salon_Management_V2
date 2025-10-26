@@ -25,7 +25,7 @@
             <tbody>
             <tr th:each="e : ${employees}">
                 <td th:text="${e.id}"></td>
-                <td th:text="${e.fullName}"></td>
+                <td th:text="${e.Name}"></td>
                 <td th:text="${e.specialization}"></td>
                 <td th:text="${e.shift}"></td>
                 <td th:text="${#numbers.formatDecimal(e.salary, 0, 'POINT', 0, 'COMMA')} + ' ₫'"></td>

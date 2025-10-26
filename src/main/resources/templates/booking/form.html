@@ -21,7 +21,7 @@
                 <select name="employeeId" class="form-select" required>
                     <option th:each="e : ${employees}"
                             th:value="${e.id}"
-                            th:text="${e.fullName}"
+                            th:text="${e.Name}"
                             th:selected="${booking.employeeId == e.id}">
                     </option>
                 </select>
