@@ -16,32 +16,29 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `payments`
+-- Table structure for table `refresh_tokens`
 --
 
-DROP TABLE IF EXISTS `payments`;
+DROP TABLE IF EXISTS `refresh_tokens`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `payments` (
+CREATE TABLE `refresh_tokens` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `amount` decimal(10,2) DEFAULT NULL,
-  `payment_date` datetime(6) DEFAULT NULL,
-  `payment_method` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `booking_id` bigint DEFAULT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `expiry_date` datetime(6) NOT NULL,
+  `token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `FKc52o2b1jkxttngufqp3t7jr3h` (`booking_id`),
-  CONSTRAINT `FKc52o2b1jkxttngufqp3t7jr3h` FOREIGN KEY (`booking_id`) REFERENCES `bookings` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  UNIQUE KEY `UKghpmfn23vmxfu3spu3lfg4r2d` (`token`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `payments`
+-- Dumping data for table `refresh_tokens`
 --
 
-LOCK TABLES `payments` WRITE;
-/*!40000 ALTER TABLE `payments` DISABLE KEYS */;
-INSERT INTO `payments` VALUES (1,555555.00,'2025-10-27 03:46:35.073646','Tiền mặt',1),(2,60000.00,'2025-10-27 04:35:15.980081','Tiền mặt',1),(3,51000.00,'2025-10-27 05:20:04.040690','Tiền mặt',1),(4,57000.00,'2025-10-27 05:24:14.085426','Tiền mặt',3),(5,950000.00,'2025-10-27 06:13:53.304909','Tiền mặt',2);
-/*!40000 ALTER TABLE `payments` ENABLE KEYS */;
+LOCK TABLES `refresh_tokens` WRITE;
+/*!40000 ALTER TABLE `refresh_tokens` DISABLE KEYS */;
+/*!40000 ALTER TABLE `refresh_tokens` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -53,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-10-27  6:53:14
+-- Dump completed on 2025-10-27 16:27:41

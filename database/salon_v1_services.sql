@@ -16,33 +16,31 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `product_usage`
+-- Table structure for table `services`
 --
 
-DROP TABLE IF EXISTS `product_usage`;
+DROP TABLE IF EXISTS `services`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `product_usage` (
+CREATE TABLE `services` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `product_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `quantity_used` int DEFAULT NULL,
-  `unit` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `usage_date` datetime(6) DEFAULT NULL,
-  `booking_id` bigint DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FKprgw69v0wbhyxski1nn2x7spg` (`booking_id`),
-  CONSTRAINT `FKprgw69v0wbhyxski1nn2x7spg` FOREIGN KEY (`booking_id`) REFERENCES `bookings` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `duration_minutes` int DEFAULT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `price` decimal(10,2) DEFAULT NULL,
+  `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `product_usage`
+-- Dumping data for table `services`
 --
 
-LOCK TABLES `product_usage` WRITE;
-/*!40000 ALTER TABLE `product_usage` DISABLE KEYS */;
-INSERT INTO `product_usage` VALUES (1,'dầu gội',11,'chai','2025-10-27 03:46:28.452248',1),(2,'chun',44,'Cái','2025-10-27 04:25:59.959693',2);
-/*!40000 ALTER TABLE `product_usage` ENABLE KEYS */;
+LOCK TABLES `services` WRITE;
+/*!40000 ALTER TABLE `services` DISABLE KEYS */;
+INSERT INTO `services` VALUES (1,'cắt và gội',50,'cắt tóc',60000.00,'Đang hoạt động'),(2,'',10,'Cắt tóc',60000.00,'Đang hoạt động'),(3,'',250,'Nhuộm',1000000.00,'Đang hoạt động'),(4,'xoa bóp vai gáy',50,'Massage',100000.00,'Đang hoạt động'),(5,'gội xả',20,'Gội đầu',30000.00,'Đang hoạt động'),(6,'cắt, gọt, dũa',45,'Làm móng',90000.00,'Đang hoạt động');
+/*!40000 ALTER TABLE `services` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -54,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-10-27  6:53:14
+-- Dump completed on 2025-10-27 16:27:41
